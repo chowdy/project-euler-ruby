@@ -1,7 +1,7 @@
 module Fibonacci
 
   def fib(max)
-    fibs = [1,2]
+    fibs = [1, 1, 2]
 
     i_2, i_1 = 1, 2
 
