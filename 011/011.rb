@@ -20,25 +20,6 @@ GRID =
 [20,73,35,29,78,31,90, 1,74,31,49,71,48,86,81,16,23,57, 5,54],
 [ 1,70,54,71,83,51,54,69,16,92,33,48,61,43,52, 1,89,19,67,48]]
 
-def get_adjacents(max_x, max_y, x, y)
-  adjacents =
-   [[x + 1, y + 1],
-    [x + 1, y],
-    [x + 1, y - 1],
-    [x, y + 1],
-    [x, y - 1],
-    [x - 1, y + 1],
-    [x - 1, y],
-    [x - 1, y - 1]]
-
-  return adjacents.select do |i|
-    i[0] >= 0 &&
-    i[0] <= max_x &&
-    i[1] >= 0 &&
-    i[1] <= max_y
-  end
-end
-
 def star_map(map, points)
   points.each do |p|
     x,y = p
@@ -47,44 +28,31 @@ def star_map(map, points)
   return map
 end
 
-MAX_X, MAX_Y = GRID[0].length - 1, GRID.length - 1
+MIN_X, MIN_Y, MAX_X, MAX_Y = 0, 0, GRID[0].length - 1, GRID.length - 1
 
 answer = 0
 (0..MAX_X).each do |x|
   (0..MAX_Y).each do |y|
-    get_adjacents(MAX_X, MAX_Y, x, y).each do |adj1|
-      x1, y1 = adj1
-      get_adjacents(MAX_X, MAX_Y, x1, y1).each do |adj2|
-        x2, y2 = adj2
-        get_adjacents(MAX_X, MAX_Y, x2, y2).each do |adj3|
-          x3, y3 = adj3
-
-          # All four points-- find the products and see if we have max.
-          product =
-           (GRID[x][y] * GRID[x1][y1] * GRID[x2][y2] * GRID[x3][y3])
-
-          product = 0 if [[x,y], [x1,y1], [x2,y2], [x3,y3]].uniq.length != 4
-
-          if product > answer
-            print ("#{GRID[x][y]} * #{GRID[x1][y1]} * ")
-            print ("#{GRID[x2][y2]} * #{GRID[x3][y3]} = ")
-            puts product
-            answer = product
-          end
-
-          if product == 70600674
-            print "~>"
-            print ("#{GRID[x][y]} * #{GRID[x1][y1]} * ")
-            print ("#{GRID[x2][y2]} * #{GRID[x3][y3]} = ")
-            puts product
-          end
-
-          #map = (("."*20+" ")*20).split
-          #puts star_map(map,[[x,y],[x1,y1],[x2,y2],[x3,y3]]).join("\n")
-          #puts "-"*20
-        end
-      end
+    lines = Hash.new { |h,k| h[k] = [[x,y]] }
+    3.times do
+      lines[:u]  << [lines[:u].last[0], lines[:u].last[1] + 1]
+      lines[:d]  << [lines[:d].last[0], lines[:d].last[1] - 1]
+      lines[:l]  << [lines[:l].last[0] - 1, lines[:l].last[1]]
+      lines[:r]  << [lines[:r].last[0] + 1, lines[:r].last[1]]
+      lines[:ul] << [lines[:ul].last[0] - 1, lines[:ul].last[1] + 1]
+      lines[:ur] << [lines[:ur].last[0] + 1, lines[:ur].last[1] + 1]
+      lines[:dl] << [lines[:dl].last[0] + 1, lines[:dl].last[1] - 1]
+      lines[:dr] << [lines[:dr].last[0] - 1, lines[:dr].last[1] - 1]
     end
+
+    lines.each do |dir, points|
+      line_prod = 1
+      points.each do |p|
+        break if (p.first < MIN_X || p.last < MIN_Y || p.first > MAX_X || p.last > MAX_Y)
+        line_prod *= GRID[p.first][p.last]
+      end
+      answer = (line_prod > answer ? line_prod : answer)
+    end 
   end
 end
 puts answer
