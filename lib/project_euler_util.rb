@@ -1,4 +1,5 @@
 module ProjectEulerUtil
+  require 'mathn'
 
   def triangles
     Enumerator.new do |yielder|
@@ -26,20 +27,31 @@ module ProjectEulerUtil
     return fibs
   end
 
-  def num_divisors(num)
-    return 1 if num == 1
-    return 2 if num.prime?
+  def get_divisors(num)
+    return [1] if num == 1
+    return [1, num] if num.prime?
 
-    divs = 0
+    divs = []
     max = num
     (1..num).each do |i|
       break if i >= max
       
       if (num % i).zero?
         max = num / i
-        divs += 2
+        divs << i
+        divs << max
       end
     end
     return divs
+  end
+  
+  def num_divisors(num)
+    return get_divisors(num).length
+  end
+
+  def sum_divisors(num)
+    divs = get_divisors(num).sort
+    divs.pop
+    return divs.inject(&:+)
   end
 end
