@@ -1,6 +1,6 @@
-require './lib/fibonacci.rb'
+require './lib/project_euler_util.rb'
 
-include Fibonacci
+include ProjectEulerUtil
 
 (fibs = fib(("9"*1000).to_i)).each_index do |idx|
   if fibs[idx].to_s.length >= 1000
