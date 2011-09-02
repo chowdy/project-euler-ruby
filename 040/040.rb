@@ -1,7 +1,5 @@
-count = 1
-str = ' ' # effectively index 0 -> 1 for our purposes.
-while str.length < 1_000_000 + 1
-  str += count.to_s
-  count += 1
-end
-puts str.split(//).values_at(1, 10, 100, 1000, 10000, 100000, 1000000).inject(1) { |prod,i| prod * i.to_i }
+# 500_000 cannot be less than 1_000_000 chars. Could probably
+# pick a better celing, but this solution is fast enough.
+str = ' ' + (1..500_000).to_a.join('')
+indices = [1, 10, 100, 1_000, 10_000, 100_000, 1_000_000]
+puts str.chars.to_a.values_at(*indices).map { |i| i.to_i }.inject(&:*)
