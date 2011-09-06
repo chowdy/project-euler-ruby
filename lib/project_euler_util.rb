@@ -1,6 +1,11 @@
 module ProjectEulerUtil
   require 'mathn'
 
+  def fact(num)
+    return 1 if num == 1 || num == 0
+    (1..num).to_a.inject(&:*)
+  end 
+
   def triangles
     Enumerator.new do |yielder|
       idx, value = 1, 1
