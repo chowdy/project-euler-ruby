@@ -1,21 +1,14 @@
-answer = 0
-chain = []
+answer, max = 0, 0
 (2...1_000_000).each do |i|
-
-  buf = [i]
-  while buf.last != 1
-    n = buf.last
-    if n.even?
-      buf << n / 2
-    else
-      buf << (3*n) + 1
-    end
+  count = 0
+  buf = i
+  while (buf = (buf.even? ? buf / 2 : 3 * buf + 1)) != 1
+    count += 1
   end
 
-  if buf.length > chain.length
+  if count > max
+    max = count
     answer = i
-    chain = buf
   end
 end
-
 puts answer
