@@ -26,7 +26,7 @@ answer = 0
 
 (0..(NUMBER.length - 5)).each do |i|
   sequence = NUMBER[i..(i+4)]
-  product = sequence.split(//).inject(1) { |memo, i| memo *= i.to_i }
+  product = sequence.chars.map { |i| i.to_i }.inject(&:*)
   answer = (product > answer ? product : answer)
 end
 

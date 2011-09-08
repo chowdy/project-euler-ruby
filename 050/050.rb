@@ -7,7 +7,7 @@ def summ(ary, start, length)
     ary[start,length].inject(0) { |sum,i| sum += i }
 end
 
-MAX = 1_000
+MAX = 10_000
 primes_lt_max = []
 answer = 0
 cur_max = 0
