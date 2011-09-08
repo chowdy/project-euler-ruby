@@ -1,16 +1,6 @@
-require './lib/project_euler_util.rb'
-include ProjectEulerUtil
+# Pre-populate list of first 10 factorials.
+@facts = [1] + (1..9).to_a.map { |i| (1..i).inject(&:*) }
 
-@memo = {}
-def memo_fact(num)
-  @memo[num] ||= fact(num)
-  return @memo[num]
-end
-
-answer = 0
-3.upto(99_999).each do |i|
-  if (i.to_s.chars.map { |c| c.to_i }.inject(0) { |m,i| m += memo_fact(i) } == i)
-    answer += i 
-  end
-end
-puts answer
+puts 3.upto(99_999).select { |i|
+  i == i.to_s.chars.map { |c| c.to_i }.inject(0) { |m,i| m += @facts[i] }
+}.inject(&:+)
