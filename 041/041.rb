@@ -2,6 +2,4 @@ require 'mathn'
 
 # Manually pared this array down until an answer was produced.
 # Could do this programmatically, but meh.
-answer = [1, 2, 3, 4, 5, 6, 7].permutation.to_a.select do |i|
-  number = i.join('').to_i.prime? end
-puts answer.max.join('')
+puts 1.upto(7).to_a.permutation.select { |i| i.join('').to_i.prime? }.max.join('')
