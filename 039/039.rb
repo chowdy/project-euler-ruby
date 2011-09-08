@@ -25,4 +25,3 @@ answer, max = 0, 0
   end
 end
 puts answer
-puts 840
