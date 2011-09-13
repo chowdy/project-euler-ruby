@@ -1,21 +1,20 @@
 require 'mathn'
 
 answer = 0
-Prime.instance.each do |p|
-  break if p > 1_000_000
-
+Prime.take_while { |i| i < 1_000_000 }.each do |p|
   p_str = p.to_s
-  p_buf = p_str.clone.split(//).rotate.join('')
+  p_buf = p_str.clone
 
-  while true
-    break if not p_buf.to_i.prime?
+  next if p > 10 && p_str[/[246805]/]
+
+  while p_buf.to_i.prime?
+    p_buf = p_buf.split(//).rotate.join('')
     
     if p_str == p_buf
       answer += 1
       break
     end 
 
-    p_buf = p_buf.split(//).rotate.join('')
   end
 end
 puts answer
