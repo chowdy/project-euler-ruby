@@ -10,7 +10,13 @@ MAX = 28_123
 2.upto(MAX).each do |i|
   @abundants << i if sum_divisors(i) > i
 end
+@sums = []
+@abundants.combination(2) do |i|
+  print "\r#{i.inspect}"
+  @sums << i[0] + i[1]
+end
 
+exit
 mid_a = (@abundants.length/2.0).floor
 mid_b = (@abundants.length/2.0).ceil
 answer = 0
@@ -46,4 +52,3 @@ answer = 0
   answer += i if (escape == :cannot_be || escape == :unsure)
 end
 puts answer
-puts 4179871 

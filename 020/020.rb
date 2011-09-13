@@ -1,1 +1,1 @@
-puts (1..100).inject(&:*).to_s.chars.map { |i| i.to_i }.inject(&:+)
+puts (1..100).inject(&:*).to_s.chars.map(&:to_i).inject(&:+)
