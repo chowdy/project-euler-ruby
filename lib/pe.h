@@ -7,5 +7,6 @@
 #define MAX_PRIMES_SIEVE 10000000
 
 int isPrime(int number);
+int isPalindrome(unsigned long long num);
 
 #endif

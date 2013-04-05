@@ -6,6 +6,20 @@
 #define PRIME 0
 #define MASK 0x80
 
+//----------------------------------------------------------
+//
+// Prime Number Stuff
+//
+//----------------------------------------------------------
+int isPalindrome(unsigned long long num) {
+  int bytes = sizeof(unsigned long long);
+}
+
+//----------------------------------------------------------
+//
+// Prime Number Stuff
+//
+//----------------------------------------------------------
 static void initializePrimes();
 static int getBitForNumber(int number);
 
@@ -36,7 +50,9 @@ static void setBitForNumber(int number) {
 static void initializePrimes() {
 
   //void *memset(void *s, int c, size_t n);
-  memset (primesSieve, 0x0A, 1);
+  //pre set the first byte 1100 1010
+  memset (primesSieve, 0xCA, 1);
+  // Pre set all numbers divisible by 2. (01010101);
   memset (primesSieve + 1, 0xAAAAAAAA, MAX_PRIMES_SIEVE / 8);
 
   // 0 and 1 are not prime.
@@ -51,5 +67,4 @@ static void initializePrimes() {
       }
     }
   }
-
 }
